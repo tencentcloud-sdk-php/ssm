@@ -48,10 +48,20 @@ use TencentCloud\Common\AbstractModel;
  * @method void setTagFilters(array $TagFilters) 设置标签过滤条件。
  * @method integer getSecretType() 获取0  -- 表示用户自定义凭据，默认为0。
 1  -- 表示用户云产品凭据。
-这个参数只能在云产品凭据(1)和用户自定义凭据(0)中二选一。
+2 -- 表示SSH密钥对凭据。
  * @method void setSecretType(integer $SecretType) 设置0  -- 表示用户自定义凭据，默认为0。
 1  -- 表示用户云产品凭据。
-这个参数只能在云产品凭据(1)和用户自定义凭据(0)中二选一。
+2 -- 表示SSH密钥对凭据。
+ * @method string getProductName() 获取此参数仅在SecretType参数值为1时生效，
+当SecretType值为1时：
+如果ProductName值为空，则表示查询所有类型的云产品凭据
+如果ProductName值为Mysql，则表示查询Mysql数据库凭据
+如果ProductName值为Tdsql-mysql，则表示查询Tdsql（Mysql版本）的凭据
+ * @method void setProductName(string $ProductName) 设置此参数仅在SecretType参数值为1时生效，
+当SecretType值为1时：
+如果ProductName值为空，则表示查询所有类型的云产品凭据
+如果ProductName值为Mysql，则表示查询Mysql数据库凭据
+如果ProductName值为Tdsql-mysql，则表示查询Tdsql（Mysql版本）的凭据
  */
 class ListSecretsRequest extends AbstractModel
 {
@@ -95,9 +105,18 @@ class ListSecretsRequest extends AbstractModel
     /**
      * @var integer 0  -- 表示用户自定义凭据，默认为0。
 1  -- 表示用户云产品凭据。
-这个参数只能在云产品凭据(1)和用户自定义凭据(0)中二选一。
+2 -- 表示SSH密钥对凭据。
      */
     public $SecretType;
+
+    /**
+     * @var string 此参数仅在SecretType参数值为1时生效，
+当SecretType值为1时：
+如果ProductName值为空，则表示查询所有类型的云产品凭据
+如果ProductName值为Mysql，则表示查询Mysql数据库凭据
+如果ProductName值为Tdsql-mysql，则表示查询Tdsql（Mysql版本）的凭据
+     */
+    public $ProductName;
 
     /**
      * @param integer $Offset 查询列表的起始位置，以0开始，不设置默认为0。
@@ -115,7 +134,12 @@ class ListSecretsRequest extends AbstractModel
      * @param array $TagFilters 标签过滤条件。
      * @param integer $SecretType 0  -- 表示用户自定义凭据，默认为0。
 1  -- 表示用户云产品凭据。
-这个参数只能在云产品凭据(1)和用户自定义凭据(0)中二选一。
+2 -- 表示SSH密钥对凭据。
+     * @param string $ProductName 此参数仅在SecretType参数值为1时生效，
+当SecretType值为1时：
+如果ProductName值为空，则表示查询所有类型的云产品凭据
+如果ProductName值为Mysql，则表示查询Mysql数据库凭据
+如果ProductName值为Tdsql-mysql，则表示查询Tdsql（Mysql版本）的凭据
      */
     function __construct()
     {
@@ -161,6 +185,10 @@ class ListSecretsRequest extends AbstractModel
 
         if (array_key_exists("SecretType",$param) and $param["SecretType"] !== null) {
             $this->SecretType = $param["SecretType"];
+        }
+
+        if (array_key_exists("ProductName",$param) and $param["ProductName"] !== null) {
+            $this->ProductName = $param["ProductName"];
         }
     }
 }
